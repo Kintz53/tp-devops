@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Mon App Docker</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #1e90ff, #00c6ff);
+            color: white;
+            text-align: center;
+            padding-top: 100px;
+        }
+        h1 {
+            font-size: 3em;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            border: none;
+            border-radius: 8px;
+            background-color: white;
+            color: #1e90ff;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #f0f0f0;
+        }
+        #result {
+            margin-top: 20px;
+            font-size: 18px;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>🚀 Mon App Docker</h1>
+    <p>Frontend Apache connecté au backend Java</p>
+
+    <button onclick="callApi()">Tester le backend</button>
+
+    <div id="result"></div>
+
+    <script>
+        function callApi() {
+            fetch("http://app-java:8080/")
+                .then(response => response.text())
+                .then(data => {
+                    document.getElementById("result").innerText = data;
+                })
+                .catch(error => {
+                    document.getElementById("result").innerText = "Erreur : " + error;
+                });
+        }
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,45 @@
+services:
+  backend:
+    build:
+      context: ./java/simpleapi
+      dockerfile: Dockerfile
+    networks:
+      - app-network
+    depends_on:
+      - database
+
+  database:
+    build:
+      context: ./DB
+      dockerfile: Dockerfile
+    networks:
+      - app-network
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+
+  httpd:
+    build:
+      context: ./httpd
+      dockerfile: Dockerfile
+    ports:
+      - "8070:80"
+    networks:
+      - app-network
+    depends_on:
+      - backend
+
+  adminer:
+    image: adminer
+    ports:
+      - "8081:8080"
+    networks:
+      - app-network
+    depends_on:
+      - database
+
+networks:
+  app-network:
+    driver: bridge
+
+volumes:
+  postgres-data:
