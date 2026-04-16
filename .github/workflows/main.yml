@@ -8,18 +8,66 @@ on:
   pull_request:
 
 jobs:
+  # Job de test du backend
   test-backend:
     runs-on: ubuntu-24.04
 
     steps:
+      # Récupère le code du dépôt
       - uses: actions/checkout@v4
 
+      # Installe Java 21
       - name: Set up JDK 21
         uses: actions/setup-java@v4
         with:
           distribution: 'temurin'
           java-version: '21'
 
+      # Compile et lance les tests Maven
       - name: Build and test with Maven
         run: mvn clean verify
         working-directory: ./Java/simpleapi
+
+  # Job de build et publication des images Docker
+  build-and-push-docker-image:
+    needs: test-backend
+    runs-on: ubuntu-24.04
+
+    # Exécution uniquement lors d'un push sur la branche main
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+
+    steps:
+      # Récupère le code
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      # Connexion à Docker Hub avec les secrets GitHub
+      - name: Log in to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      # Build et push de l'image backend
+      - name: Build and push backend
+        uses: docker/build-push-action@v6
+        with:
+          context: ./Java/simpleapi
+          push: true
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/tp-devops-simple-api:latest
+
+      # Build et push de l'image database
+      - name: Build and push database
+        uses: docker/build-push-action@v6
+        with:
+          context: ./Database
+          push: true
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/tp-devops-database:latest
+
+      # Build et push de l'image httpd
+      - name: Build and push httpd
+        uses: docker/build-push-action@v6
+        with:
+          context: ./Httpd
+          push: true
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/tp-devops-httpd:latest
