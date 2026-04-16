@@ -22,6 +22,7 @@ jobs:
 
 
       - name: Build, test and analyze with SonarCloud
+        if: github.ref == 'refs/heads/main'
         working-directory: ./Java/simpleapi
         run: > #Test via sonar
           mvn -B verify sonar:sonar
