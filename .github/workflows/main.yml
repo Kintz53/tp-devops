@@ -25,9 +25,9 @@ jobs:
         working-directory: ./Java/simpleapi
 
       - name: Build, test and analyze with SonarCloud
-        run: >
+        run: > #On test via snar
           mvn -B verify sonar:sonar
-          -Dsonar.projectKey=kintz53_simple-api
+          -Dsonar.projectKey=tp-devops
           -Dsonar.organization=kintz53
           -Dsonar.host.url=https://sonarcloud.io
           -Dsonar.login=${{ secrets.SONAR_TOKEN }}
