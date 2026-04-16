@@ -22,7 +22,7 @@ jobs:
 
 
       - name: Build, test and analyze with SonarCloud
-        run: >
+        run: > #Test via sonar
           mvn -B verify sonar:sonar
           -Dsonar.projectKey=tp-devops
           -Dsonar.organization=kintz53
