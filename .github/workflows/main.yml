@@ -53,20 +53,12 @@ jobs:
     runs-on: ubuntu-24.04
     
     steps:
-        - uses: actions/checkout@v4
+
         - name: Set up JDK 21
           uses: actions/setup-java@v4
           with:
               distribution: 'temurin'
               java-version: '21'
-        - name: Build, test and analyze with SonarCloud
-          run: > #Test via sonar
-            mvn -B verify sonar:sonar
-            -Dsonar.branch.name=main
-            -Dsonar.projectKey=Kintz53_tp-devops
-            -Dsonar.organization=kintz53
-            -Dsonar.host.url=https://sonarcloud.io
-            -Dsonar.token=${{ secrets.SONAR_TOKEN }}
 
         - name: Checkout code
           uses: actions/checkout@v4
@@ -91,20 +83,11 @@ jobs:
     runs-on: ubuntu-24.04
     
     steps:
-        - uses: actions/checkout@v4
         - name: Set up JDK 21
           uses: actions/setup-java@v4
           with:
               distribution: 'temurin'
               java-version: '21'
-        - name: Build, test and analyze with SonarCloud
-          run: > #Test via sonar
-            mvn -B verify sonar:sonar
-            -Dsonar.branch.name=main
-            -Dsonar.projectKey=Kintz53_tp-devops
-            -Dsonar.organization=kintz53
-            -Dsonar.host.url=https://sonarcloud.io
-            -Dsonar.token=${{ secrets.SONAR_TOKEN }}
 
         - name: Checkout code
           uses: actions/checkout@v4
@@ -128,22 +111,12 @@ jobs:
     runs-on: ubuntu-24.04
     
     steps:
-        - uses: actions/checkout@v4
+
         - name: Set up JDK 21
           uses: actions/setup-java@v4
           with:
               distribution: 'temurin'
               java-version: '21'
-        - name: Build, test and analyze with SonarCloud
-
-
-          run: > #Test via sonar
-            mvn -B verify sonar:sonar
-            -Dsonar.branch.name=main
-            -Dsonar.projectKey=Kintz53_tp-devops
-            -Dsonar.organization=kintz53
-            -Dsonar.host.url=https://sonarcloud.io
-            -Dsonar.token=${{ secrets.SONAR_TOKEN }}
 
         - name: Checkout code
           uses: actions/checkout@v4
