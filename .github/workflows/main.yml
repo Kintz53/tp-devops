@@ -47,9 +47,10 @@ jobs:
           -Dsonar.organization=kintz53
           -Dsonar.host.url=https://sonarcloud.io
           -Dsonar.token=${{ secrets.SONAR_TOKEN }}
+          -Dsonar.qualitygate.wait=true
          
   build-and-push-docker-image-backend:
-    needs: test-backend
+    needs: sonar
     runs-on: ubuntu-24.04
     
     steps:
@@ -79,7 +80,7 @@ jobs:
             push: ${{ github.ref == 'refs/heads/main' }}
 
   build-and-push-docker-image-database:
-    needs: build-and-push-docker-image-backend
+    needs: sonar
     runs-on: ubuntu-24.04
     
     steps:
@@ -107,7 +108,7 @@ jobs:
             push: ${{ github.ref == 'refs/heads/main' }}
 
   build-and-push-docker-image-HTTPD:
-    needs: build-and-push-docker-image-database
+    needs: sonar
     runs-on: ubuntu-24.04
     
     steps:
