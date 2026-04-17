@@ -24,16 +24,6 @@ jobs:
         run: mvn clean verify         # compile + lance les tests
         working-directory: ./Java/simpleapi   # dossier où se trouve le pom.xml
 
-      - name: Build, test and analyze with SonarCloud
-        if: github.ref == 'refs/heads/main'
-        working-directory: ./Java/simpleapi
-        run: > #Test via sonar
-          mvn -B verify sonar:sonar
-          -Dsonar.branch.name=main
-          -Dsonar.projectKey=Kintz53_tp-devops
-          -Dsonar.organization=kintz53
-          -Dsonar.host.url=https://sonarcloud.io
-          -Dsonar.token=${{ secrets.SONAR_TOKEN }}
          
   sonar:   
       needs: test-backend
@@ -69,8 +59,6 @@ jobs:
               distribution: 'temurin'
               java-version: '21'
         - name: Build, test and analyze with SonarCloud
-          if: github.ref == 'refs/heads/main'
-          working-directory: ./Java/simpleapi
           run: > #Test via sonar
             mvn -B verify sonar:sonar
             -Dsonar.branch.name=main
@@ -108,8 +96,6 @@ jobs:
               distribution: 'temurin'
               java-version: '21'
         - name: Build, test and analyze with SonarCloud
-          if: github.ref == 'refs/heads/main'
-          working-directory: ./Java/simpleapi
           run: > #Test via sonar
             mvn -B verify sonar:sonar
             -Dsonar.branch.name=main
@@ -146,8 +132,8 @@ jobs:
               distribution: 'temurin'
               java-version: '21'
         - name: Build, test and analyze with SonarCloud
-          if: github.ref == 'refs/heads/main'
-          working-directory: ./Java/simpleapi
+
+
           run: > #Test via sonar
             mvn -B verify sonar:sonar
             -Dsonar.branch.name=main
