@@ -64,8 +64,8 @@ jobs:
     
     steps:
         - name: Set up JDK 21
-            uses: actions/setup-java@v4
-            with:
+          uses: actions/setup-java@v4
+          with:
               distribution: 'temurin'
               java-version: '21'
         - name: Build, test and analyze with SonarCloud
@@ -103,10 +103,10 @@ jobs:
     
     steps:
         - name: Set up JDK 21
-            uses: actions/setup-java@v4
-            with:
+          uses: actions/setup-java@v4
+          with:
               distribution: 'temurin'
-              java-version: '21
+              java-version: '21'
         - name: Build, test and analyze with SonarCloud
           if: github.ref == 'refs/heads/main'
           working-directory: ./Java/simpleapi
@@ -141,10 +141,10 @@ jobs:
     
     steps:
         - name: Set up JDK 21
-            uses: actions/setup-java@v4
-            with:
+          uses: actions/setup-java@v4
+          with:
               distribution: 'temurin'
-              java-version: '21
+              java-version: '21'
         - name: Build, test and analyze with SonarCloud
           if: github.ref == 'refs/heads/main'
           working-directory: ./Java/simpleapi
