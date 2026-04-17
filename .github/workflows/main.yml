@@ -26,10 +26,12 @@ jobs:
         working-directory: ./Java/simpleapi
         run: > #Test via sonar
           mvn -B verify sonar:sonar
+          -Dsonar.branch.name=main
           -Dsonar.projectKey=kintz53_tp-devops
           -Dsonar.organization=kintz53
           -Dsonar.host.url=https://sonarcloud.io
           -Dsonar.token=${{ secrets.SONAR_TOKEN }}
+         
           
 
   build-and-push-docker-image:
