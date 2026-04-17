@@ -35,7 +35,7 @@ jobs:
           -Dsonar.host.url=https://sonarcloud.io
           -Dsonar.token=${{ secrets.SONAR_TOKEN }}
          
-    sonar:   
+  sonar:   
       needs: test-backend
       runs-on: ubuntu-24.04
       steps:
