@@ -9,7 +9,7 @@ COPY yarn.lock .
 COPY default.conf .
 COPY .env.production .
 
-RUN RUN npm install --legacy-peer-deps
+RUN RUN npm install
 RUN npm run build
 
 FROM nginx:1.15.7-alpine
