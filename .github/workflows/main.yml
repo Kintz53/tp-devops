@@ -62,7 +62,7 @@ jobs:
 
       - name: Install dependencies
         working-directory: ./front
-        run: npm install
+        run: npm install --legacy-peer-deps
 
       - name: Run SonarCloud (frontend)
         working-directory: ./front
