@@ -133,7 +133,7 @@ jobs:
             context: ./httpd
             tags: ${{ secrets.DOCKERHUB_USERNAME }}/tp-devops-httpd:latest
             push: ${{ github.ref == 'refs/heads/main' }}
-  deploy:
+  deploy: # builds needs
         needs:
           - build-and-push-docker-image-backend
           - build-and-push-docker-image-database
