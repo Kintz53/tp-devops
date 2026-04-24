@@ -1,0 +1,55 @@
+name: Manual Deploy
+
+on:
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-24.04
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Install Ansible
+        run: |
+          sudo apt update
+          sudo apt install -y ansible
+
+      - name: Install community.docker collection
+        run: |
+          ansible-galaxy collection install community.docker
+
+      - name: Create SSH key
+        run: |
+          mkdir -p ~/.ssh
+          printf '%s\n' "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+
+      - name: Add server to known hosts
+        run: |
+          ssh-keyscan -H ${{ secrets.SSH_HOST }} >> ~/.ssh/known_hosts
+
+      - name: Create CI inventory
+        run: |
+          mkdir -p ansible/inventories
+          cat > ansible/inventories/setup-ci.yml <<EOF
+          all:
+            vars:
+              ansible_user: ${{ secrets.SSH_USER }}
+              ansible_ssh_private_key_file: /home/runner/.ssh/id_rsa
+              ansible_python_interpreter: /opt/docker_venv/bin/python
+              db_name: db
+              db_user: usr
+              db_password: pwd
+            children:
+              prod:
+                hosts:
+                  takima:
+                    ansible_host: ${{ secrets.SSH_HOST }}
+          EOF
+
+      - name: Deploy with Ansible
+        run: |
+          cd ansible
+          ansible-playbook -i inventories/setup-ci.yml playbook.yml
