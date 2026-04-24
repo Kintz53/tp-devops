@@ -6,6 +6,7 @@ on:
       - main
       - develop
   pull_request:
+  workflow_dispatch:
 
 jobs:
   test-backend:
@@ -139,7 +140,7 @@ jobs:
           - build-and-push-docker-image-database
           - build-and-push-docker-image-HTTPD
         runs-on: ubuntu-24.04
-        if: github.ref == 'refs/heads/main'
+        if: github.event_name == 'workflow_dispatch'
 
         steps:
           - name: Checkout code
