@@ -49,30 +49,7 @@ jobs:
           -Dsonar.host.url=https://sonarcloud.io
           -Dsonar.token=${{ secrets.SONAR_TOKEN }}
           -Dsonar.qualitygate.wait=true
-  sonar-frontend:
-    runs-on: ubuntu-24.04
-
-    steps:
-      - uses: actions/checkout@v4
-
-      - name: Use Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: '18'
-
-      - name: Install dependencies
-        working-directory: ./front
-        run: npm install --legacy-peer-deps
-
-      - name: Run SonarCloud (frontend)
-        working-directory: ./front
-        run: |
-          npx sonar-scanner \
-            -Dsonar.projectKey=Kintz53_tp-devops-front \
-            -Dsonar.organization=kintz53 \
-            -Dsonar.sources=src \
-            -Dsonar.host.url=https://sonarcloud.io \
-            -Dsonar.login=${{ secrets.SONAR_TOKEN }}       
+        
   
   build-and-push-docker-image-backend:
     needs: sonar
@@ -132,7 +109,6 @@ jobs:
             push: ${{ github.ref == 'refs/heads/main' }}
   build-and-push-docker-image-front:
     runs-on: ubuntu-24.04
-    needs : sonar-frontend
 
     steps:
       - name: Checkout code
