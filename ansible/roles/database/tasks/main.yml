@@ -1,0 +1,16 @@
+- name: Launch database container
+  community.docker.docker_container:
+    name: database
+    image: kintz53/tp-devops-database:latest
+    state: started
+    restart_policy: always
+    pull: true
+    docker_host: unix:///var/run/docker.sock
+    env:
+      POSTGRES_DB: "{{ db_name }}"
+      POSTGRES_USER: "{{ db_user }}"
+      POSTGRES_PASSWORD: "{{ db_password }}"
+    networks:
+      - name: app-network
+    volumes:
+      - postgres-data:/var/lib/postgresql/data

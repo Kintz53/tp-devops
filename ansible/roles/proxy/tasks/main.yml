@@ -1,0 +1,25 @@
+- name: Launch httpd container
+  community.docker.docker_container:
+    name: httpd
+    image: kintz53/tp-devops-httpd:latest
+    state: started
+    restart_policy: always
+    pull: true
+    docker_host: unix:///var/run/docker.sock
+    ports:
+      - "80:80"
+    networks:
+      - name: app-network
+
+- name: Launch adminer container
+  community.docker.docker_container:
+    name: adminer
+    image: adminer
+    state: started
+    restart_policy: always
+    pull: true
+    docker_host: unix:///var/run/docker.sock
+    ports:
+      - "8081:8080"
+    networks:
+      - name: app-network

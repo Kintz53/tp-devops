@@ -1,0 +1,9 @@
+- name: Create app network
+  community.docker.docker_network:
+    name: app-network
+    docker_host: unix:///var/run/docker.sock
+
+- name: Create postgres volume
+  community.docker.docker_volume:
+    name: postgres-data
+    docker_host: unix:///var/run/docker.sock
