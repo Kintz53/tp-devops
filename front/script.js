@@ -7,7 +7,7 @@ async function fetchData() {
     const students = await studentsResponse.json();
 
     displayDepartments(departments);
-    displayStudents(students, departments);
+    displayStudents(students);
   } catch (error) {
     console.error("Erreur lors du chargement des données :", error);
   }
@@ -25,21 +25,17 @@ function displayDepartments(departments) {
   });
 }
 
-function displayStudents(students, departments) {
+function displayStudents(students) {
   const tbody = document.getElementById("students");
   tbody.innerHTML = "";
 
   students.forEach((student) => {
-    const department = departments.find(
-      (dep) => dep.id === student.department_id || dep.id === student.departmentId
-    );
-
     const row = document.createElement("tr");
 
     row.innerHTML = `
-      <td>${student.first_name || student.firstName}</td>
-      <td>${student.last_name || student.lastName}</td>
-      <td>${department ? department.name : "Unknown"}</td>
+      <td>${student.firstname}</td>
+      <td>${student.lastname}</td>
+      <td>${student.department.name}</td>
     `;
 
     tbody.appendChild(row);
